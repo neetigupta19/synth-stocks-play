@@ -17,9 +17,9 @@ const dummyLeaders = [
 ];
 
 const rankIcon = (index: number) => {
-  if (index === 0) return <Crown className="h-5 w-5 text-yellow-400" />;
-  if (index === 1) return <Medal className="h-5 w-5 text-gray-300" />;
-  if (index === 2) return <Medal className="h-5 w-5 text-amber-600" />;
+  if (index === 0) return <Crown className="h-5 w-5 text-secondary" />;
+  if (index === 1) return <Medal className="h-5 w-5 text-muted-foreground" />;
+  if (index === 2) return <Medal className="h-5 w-5 text-accent" />;
   return <span className="font-mono text-xs text-muted-foreground w-5 text-center">{index + 1}</span>;
 };
 
