@@ -43,6 +43,17 @@ const Trading = () => {
     if (!holding || holding.shares < qty) { setMsg('Not enough shares!'); return; }
     const revenue = selected.price * qty;
     addCoins(revenue);
+    // Track losing trade
+    if (selected.price < holding.avgPrice) {
+      const loss = (holding.avgPrice - selected.price) * qty;
+      addTradeMistake({
+        symbol: selected.symbol,
+        buyPrice: holding.avgPrice,
+        sellPrice: selected.price,
+        shares: qty,
+        loss,
+      });
+    }
     const remaining = holding.shares - qty;
     const newHoldings = remaining === 0
       ? user.holdings.filter(h => h.symbol !== selected.symbol)

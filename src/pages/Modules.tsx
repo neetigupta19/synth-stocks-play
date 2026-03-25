@@ -107,6 +107,17 @@ const Modules = () => {
     if (!mod) return;
     const score = mod.quiz.reduce((s, q, i) => s + (answers[i] === q.correct ? 1 : 0), 0);
     const pct = Math.round((score / mod.quiz.length) * 100);
+    // Record wrong answers as mistakes
+    mod.quiz.forEach((q, i) => {
+      if (answers[i] !== q.correct) {
+        addQuizMistake({
+          moduleTitle: mod.title,
+          question: q.question,
+          yourAnswer: q.options[answers[i]] ?? 'No answer',
+          correctAnswer: q.options[q.correct],
+        });
+      }
+    });
     if (pct >= 50) {
       completeModule(mod.id, pct);
       addCoins(mod.reward);
