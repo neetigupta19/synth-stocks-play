@@ -93,7 +93,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
   const signup = (username: string) => {
     setUser({
-      username, coins: 10000, xp: 0, level: 1,
+      username, coins: 0, xp: 0, level: 1,
       joinedAt: Date.now(), modules: [], holdings: [],
       trades: 0, badges: ['Newcomer'],
     });
