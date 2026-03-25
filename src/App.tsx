@@ -12,7 +12,8 @@ import Discussion from "./pages/Discussion";
 import Profile from "./pages/Profile";
 import BiweeklyTest from "./pages/BiweeklyTest";
 import LiveCharts from "./pages/LiveCharts";
-import Chatbot from "./pages/Chatbot";
+import Leaderboard from "./pages/Leaderboard";
+import MistakeAnalysis from "./pages/MistakeAnalysis";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -33,7 +34,8 @@ const App = () => (
             <Route path="/profile" element={<Profile />} />
             <Route path="/biweekly" element={<BiweeklyTest />} />
             <Route path="/charts" element={<LiveCharts />} />
-            <Route path="/chatbot" element={<Chatbot />} />
+            <Route path="/leaderboard" element={<Leaderboard />} />
+            <Route path="/mistakes" element={<MistakeAnalysis />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

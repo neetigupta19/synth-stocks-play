@@ -2,53 +2,90 @@ import { useState } from 'react';
 import { useUser } from '@/contexts/UserContext';
 import { Layout } from '@/components/Layout';
 import { motion } from 'framer-motion';
-import { CheckCircle, Lock } from 'lucide-react';
+import { CheckCircle, Lock, BookOpen } from 'lucide-react';
 
 interface Quiz { question: string; options: string[]; correct: number; }
 
 const modulesData = [
   {
     id: 1, title: 'Stock Market Basics', desc: 'Learn what stocks are and how markets work.',
-    content: 'A stock represents ownership in a company. When you buy a stock, you own a small piece of that company. Stock prices are determined by supply and demand in the market.',
+    content: [
+      'A stock (also known as equity) represents ownership in a company. When you buy a stock, you own a small piece of that company — this is called a share.',
+      'Stock prices are determined by supply and demand in the market. When more people want to buy a stock (demand), the price goes up. When more people want to sell (supply), the price goes down.',
+      'The stock market is where buyers and sellers come together. Major exchanges include NYSE (New York Stock Exchange) and NASDAQ.',
+      'Key terms to know:\n• Market Cap — the total value of a company\'s shares\n• Volume — the number of shares traded in a period\n• Ticker Symbol — the abbreviation used to identify a stock (e.g., AAPL for Apple)\n• IPO — Initial Public Offering, when a company first sells shares to the public',
+    ],
     quiz: [
       { question: 'What does a stock represent?', options: ['A loan to a company', 'Ownership in a company', 'A bond', 'A derivative'], correct: 1 },
       { question: 'What determines stock prices?', options: ['The government', 'Supply and demand', 'Company CEO', 'Random'], correct: 1 },
+      { question: 'What is a ticker symbol?', options: ['A company\'s phone number', 'An abbreviation to identify a stock', 'A type of bond', 'The stock price'], correct: 1 },
     ] as Quiz[],
     reward: 200,
   },
   {
     id: 2, title: 'Reading Charts', desc: 'Understand candlestick charts and trends.',
-    content: 'Candlestick charts show the open, high, low, and close prices for a time period. Green candles mean the price went up, red means it went down. Trends can be identified by connecting highs or lows.',
+    content: [
+      'Candlestick charts are the most popular way to visualize stock price movement. Each candlestick shows four data points for a time period: Open, High, Low, and Close (OHLC).',
+      'Green (bullish) candles mean the closing price was higher than the opening price — the stock went up. Red (bearish) candles mean the closing price was lower — the stock went down.',
+      'The body of the candle shows the range between open and close. The wicks (thin lines) show the high and low extremes reached during that period.',
+      'Common patterns:\n• Doji — open and close are nearly equal, signaling indecision\n• Hammer — small body with a long lower wick, often signals a reversal\n• Engulfing — a larger candle completely covers the previous one\n• Support & Resistance — price levels where stocks tend to stop falling or rising',
+      'Trends can be identified by connecting consecutive highs (resistance) or lows (support). An uptrend has higher highs and higher lows. A downtrend has lower highs and lower lows.',
+    ],
     quiz: [
       { question: 'What does a green candle mean?', options: ['Price went down', 'Price stayed same', 'Price went up', 'Market closed'], correct: 2 },
       { question: 'What do candlesticks show?', options: ['Only close price', 'Open, high, low, close', 'Volume only', 'Market cap'], correct: 1 },
+      { question: 'What does a Doji pattern signal?', options: ['Strong buying', 'Strong selling', 'Indecision in the market', 'Market crash'], correct: 2 },
     ] as Quiz[],
     reward: 300,
   },
   {
     id: 3, title: 'Risk Management', desc: 'Learn to protect your portfolio from big losses.',
-    content: 'Never risk more than 2% of your portfolio on a single trade. Use stop-losses to limit downside. Diversification across sectors reduces overall risk.',
+    content: [
+      'Risk management is the most important skill in trading. Without it, even the best strategy will eventually fail. The goal is to protect your capital so you can trade another day.',
+      'The 2% Rule: Never risk more than 2% of your total portfolio on a single trade. If you have 10,000 coins, your maximum risk per trade should be 200 coins.',
+      'Stop-Loss Orders: A stop-loss automatically sells your position when the price drops to a certain level. This limits your downside. For example, if you buy at 100, you might set a stop-loss at 95.',
+      'Position Sizing: Calculate how many shares to buy based on your risk tolerance.\nFormula: Position Size = (Risk Amount) / (Entry Price - Stop Loss Price)\nExample: Risk 200 coins, buy at 100, stop at 95 → Position = 200/5 = 40 shares',
+      'Diversification: Don\'t put all your eggs in one basket. Spread investments across different sectors (tech, healthcare, energy) and asset types to reduce overall risk.',
+      'Risk/Reward Ratio: Only take trades where the potential reward is at least 2x the risk. If you risk 100 coins, your target profit should be at least 200 coins.',
+    ],
     quiz: [
       { question: 'Max risk per trade rule of thumb?', options: ['10%', '50%', '2%', '25%'], correct: 2 },
       { question: 'What is diversification?', options: ['Buying one stock', 'Spreading investments', 'Selling everything', 'Day trading'], correct: 1 },
+      { question: 'A good risk/reward ratio is at least?', options: ['1:1', '1:2', '3:1', '1:0.5'], correct: 1 },
     ] as Quiz[],
     reward: 300,
   },
   {
     id: 4, title: 'Order Types', desc: 'Market orders, limit orders, and stop orders.',
-    content: 'Market orders execute immediately at current price. Limit orders only execute at your specified price or better. Stop orders trigger when a price level is reached.',
+    content: [
+      'Understanding order types is crucial for executing trades effectively. Different orders serve different purposes depending on your strategy.',
+      'Market Order: Executes immediately at the current best available price. Use when you want to buy or sell right now. Downside: you might get a slightly different price than expected (slippage).',
+      'Limit Order: You set a specific price. A limit buy executes only at your price or lower. A limit sell executes at your price or higher. Use when you want price control but aren\'t in a rush.',
+      'Stop Order (Stop-Loss): Triggers a market order when the price reaches your specified level. Used to limit losses. A stop at $95 means "sell at market if price drops to $95."',
+      'Stop-Limit Order: Combines stop and limit orders. When the stop price is hit, it places a limit order instead of a market order. More control but may not execute if the price moves too fast.',
+      'Key tips:\n• Use market orders for liquid stocks with tight spreads\n• Use limit orders when the bid-ask spread is wide\n• Always set stop-losses to protect against unexpected drops\n• Consider time-in-force: Day orders expire at market close, GTC (Good Til Canceled) stays active',
+    ],
     quiz: [
       { question: 'Which executes immediately?', options: ['Limit order', 'Stop order', 'Market order', 'None'], correct: 2 },
       { question: 'A limit buy order executes at?', options: ['Any price', 'Your price or lower', 'Your price or higher', 'Random price'], correct: 1 },
+      { question: 'What does GTC stand for?', options: ['Get The Cash', 'Good Til Canceled', 'Global Trade Center', 'Great Trade Call'], correct: 1 },
     ] as Quiz[],
     reward: 250,
   },
   {
     id: 5, title: 'Portfolio Strategy', desc: 'Build a balanced long-term portfolio.',
-    content: 'A balanced portfolio includes stocks, bonds, and cash. Rebalance periodically. Growth stocks offer higher returns but more risk. Value stocks are more stable.',
+    content: [
+      'A well-built portfolio balances risk and reward based on your goals, time horizon, and risk tolerance. There\'s no one-size-fits-all approach.',
+      'Asset Allocation: Decide how to split your money. A common split: 60% stocks, 30% bonds, 10% cash. Younger investors can afford more stocks (higher growth, higher risk).',
+      'Growth Stocks vs Value Stocks:\n• Growth stocks are companies expected to grow revenue fast (e.g., tech startups). Higher potential returns but more volatile.\n• Value stocks are undervalued companies with stable earnings. Lower growth but more predictable.',
+      'Rebalancing: Over time, your portfolio drifts from its target allocation. If stocks surge, they might become 80% of your portfolio. Rebalancing means selling some winners and buying more of the underperformers to return to your target mix.',
+      'Dollar-Cost Averaging (DCA): Invest a fixed amount regularly regardless of price. This reduces the impact of volatility. You buy more shares when prices are low and fewer when prices are high.',
+      'Key principles:\n• Don\'t try to time the market\n• Stay diversified across sectors and geographies\n• Keep fees low — they compound over time\n• Have an emergency fund before investing\n• Review and rebalance quarterly',
+    ],
     quiz: [
       { question: 'What should a balanced portfolio include?', options: ['Only stocks', 'Stocks, bonds, cash', 'Only crypto', 'Only bonds'], correct: 1 },
       { question: 'Growth stocks are?', options: ['Low risk low return', 'Higher risk higher return', 'Always profitable', 'Government bonds'], correct: 1 },
+      { question: 'What is Dollar-Cost Averaging?', options: ['Buying at the lowest price', 'Investing fixed amounts regularly', 'Only buying in dollars', 'Selling at the highest price'], correct: 1 },
     ] as Quiz[],
     reward: 400,
   },
@@ -96,13 +133,23 @@ const Modules = () => {
 
             {!quizMode ? (
               <div className="mt-4 space-y-4">
-                <p className="text-sm text-foreground leading-relaxed">{mod.content}</p>
-                {!completed && (
-                  <button onClick={() => { setQuizMode(true); setAnswers([]); setSubmitted(false); }}
-                    className="btn-cyber-primary text-xs">
-                    Take Quiz
-                  </button>
-                )}
+                {mod.content.map((paragraph, pi) => (
+                  <div key={pi} className="text-sm text-foreground leading-relaxed whitespace-pre-line">
+                    {paragraph}
+                  </div>
+                ))}
+                <div className="border-t border-border pt-4 mt-6">
+                  <div className="flex items-center gap-2 mb-3">
+                    <BookOpen className="h-4 w-4 text-primary" />
+                    <span className="font-mono text-xs text-muted-foreground">Ready to test your knowledge?</span>
+                  </div>
+                  {!completed && (
+                    <button onClick={() => { setQuizMode(true); setAnswers([]); setSubmitted(false); }}
+                      className="btn-cyber-primary text-xs">
+                      Take Quiz — Earn {mod.reward} Coins
+                    </button>
+                  )}
+                </div>
               </div>
             ) : (
               <div className="mt-4 space-y-6">
