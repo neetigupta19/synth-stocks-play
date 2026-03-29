@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Search, TrendingUp, TrendingDown, Clock, RefreshCw, AlertTriangle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const ALPHA_VANTAGE_API_KEY = 'demo'; // Replace with your free key from https://www.alphavantage.co/support/#api-key
+const ALPHA_VANTAGE_API_KEY = 'ALPHA_MY_API_KEY'; // Replace with your free key from https://www.alphavantage.co/support/#api-key
 
 const PRESET_STOCKS = ['IBM', 'AAPL', 'MSFT', 'GOOGL', 'TSLA'];
 const CHART_TYPES = ['Line', 'Candlestick', 'Volume'] as const;
