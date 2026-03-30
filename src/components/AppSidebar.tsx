@@ -1,4 +1,4 @@
-import { LayoutDashboard, BookOpen, Clock, LineChart, MessageSquare, User, Bot, LogOut, CandlestickChart } from 'lucide-react';
+import { LayoutDashboard, BookOpen, Clock, MessageSquare, User, LogOut, CandlestickChart } from 'lucide-react';
 import { NavLink } from '@/components/NavLink';
 import { useUser } from '@/contexts/UserContext';
 import {
@@ -9,12 +9,10 @@ import {
 const navItems = [
   { title: 'Dashboard', url: '/dashboard', icon: LayoutDashboard },
   { title: 'Modules', url: '/modules', icon: BookOpen },
-  { title: 'Mock Trading', url: '/trading', icon: CandlestickChart },
+  { title: 'Live Trading', url: '/live-trading', icon: CandlestickChart },
   { title: 'Bi-weekly Test', url: '/biweekly', icon: Clock },
-  { title: 'Live Charts', url: '/charts', icon: LineChart },
   { title: 'Discussion', url: '/discussion', icon: MessageSquare },
   { title: 'Profile', url: '/profile', icon: User },
-  { title: 'Chatbot', url: '/chatbot', icon: Bot },
 ];
 
 export function AppSidebar() {
