@@ -1,4 +1,4 @@
-import { LayoutDashboard, BookOpen, Clock, LineChart, MessageSquare, User, Bot, LogOut, CandlestickChart } from 'lucide-react';
+import { LayoutDashboard, BookOpen, Clock, MessageSquare, User, LogOut, CandlestickChart } from 'lucide-react';
 import { NavLink } from '@/components/NavLink';
 import { useUser } from '@/contexts/UserContext';
 import {
