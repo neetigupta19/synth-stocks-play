@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Layout } from '@/components/Layout';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   BarChart, Bar, ComposedChart, Cell,
@@ -9,21 +8,10 @@ import {
 import { Clock, TrendingUp, TrendingDown, Minus, AlertTriangle, Plus } from 'lucide-react';
 
 // ── TYPES ──
-interface NewsItem { id: number; headline: string; timestamp: string; }
 interface StockTick { time: string; open: number; high: number; low: number; close: number; volume: number; }
 interface StockData { symbol: string; label: string; data: StockTick[]; pattern: string; riskReward: number; }
 
 // ── MOCK DATA ──
-const NEWS: NewsItem[] = [
-  { id: 1, headline: 'TCS wins $2B cloud migration deal with European bank', timestamp: '2 min ago' },
-  { id: 2, headline: 'Infosys raises FY26 revenue guidance to 4.5-5%', timestamp: '8 min ago' },
-  { id: 3, headline: 'HDFC Bank Q3 net profit rises 18% YoY', timestamp: '15 min ago' },
-  { id: 4, headline: 'Maruti Suzuki EV launch rumours drive stock rally', timestamp: '22 min ago' },
-  { id: 5, headline: 'RBI holds repo rate steady at 6.5%', timestamp: '35 min ago' },
-  { id: 6, headline: 'IT sector outlook upgraded by Goldman Sachs', timestamp: '48 min ago' },
-  { id: 7, headline: 'Auto sector sees highest monthly sales in 3 years', timestamp: '1 hr ago' },
-  { id: 8, headline: 'FII inflows into Indian equities hit $1.2B this week', timestamp: '1.5 hr ago' },
-];
 
 const generateTicks = (base: number, volatility: number, trend: number): StockTick[] =>
   Array.from({ length: 30 }, (_, i) => {
@@ -140,20 +128,29 @@ const BiweeklyTest = () => {
       <div className="flex flex-col lg:flex-row gap-4 h-[calc(100vh-5rem)] max-h-[900px]">
         {/* ═══ LEFT HALF ═══ */}
         <div className="flex-1 flex flex-col gap-3 min-w-0">
-          {/* NEWS */}
-          <div className="card-cyber p-3">
-            <h3 className="font-display text-xs tracking-widest text-primary mb-2">LIVE NEWS</h3>
-            <ScrollArea className="w-full whitespace-nowrap">
-              <div className="flex gap-3 pb-2">
-                {NEWS.map(n => (
-                  <div key={n.id} className="inline-flex flex-col min-w-[220px] bg-muted rounded-md px-3 py-2 border border-border">
-                    <span className="font-mono text-xs text-foreground whitespace-normal leading-tight">{n.headline}</span>
-                    <span className="font-mono text-[10px] text-muted-foreground mt-1">{n.timestamp}</span>
-                  </div>
-                ))}
+          {/* NEWS TERMINAL */}
+          <div className="card-cyber p-0 flex items-center overflow-hidden bg-background/50 border border-primary/20 relative rounded-md h-[42px] shrink-0">
+            <style>{`
+              @keyframes scroll-news {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(-100%); }
+              }
+              .news-marquee {
+                display: inline-block;
+                white-space: nowrap;
+                animation: scroll-news 15s linear infinite;
+                will-change: transform;
+                padding-left: 100%;
+              }
+            `}</style>
+            <h3 className="font-display text-xs tracking-widest text-primary shrink-0 z-10 px-4 bg-background flex items-center h-full absolute left-0 top-0 bottom-0 shadow-[16px_0_16px_hsl(var(--background))] border-r border-primary/20">
+              TERMINAL<span className="animate-pulse">_</span>
+            </h3>
+            <div className="flex-1 overflow-hidden h-full flex items-center rounded-md">
+              <div className="news-marquee font-mono text-[11px] text-primary/80 tracking-wider">
+                 [AWAITING LIVE DATA STREAM...] /// [SYSTEM STANDBY...] /// [CONNECTING TO SECURE CHANNEL...] /// [INITIALIZING...]
               </div>
-              <ScrollBar orientation="horizontal" />
-            </ScrollArea>
+            </div>
           </div>
 
           {/* STOCK TABS */}
