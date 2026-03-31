@@ -12,10 +12,9 @@ const navItems = [
   { title: 'Modules', url: '/modules', icon: BookOpen },
   { title: 'Live Trading', url: '/live-trading', icon: CandlestickChart },
   { title: 'Bi-weekly Test', url: '/biweekly', icon: Clock },
-  { title: 'Discussion', url: '/discussion', icon: MessageSquare },
+  { title: 'TradeTalk', url: '/tradetalk', icon: MessageSquare },
   { title: 'Leaderboard', url: '/leaderboard', icon: Trophy },
   { title: 'Mistake Analysis', url: '/mistakes', icon: AlertTriangle },
-  { title: 'Profile', url: '/profile', icon: User },
 ];
 
 export function Layout({ children }: { children: ReactNode }) {

@@ -9,7 +9,7 @@ import Dashboard from "./pages/Dashboard";
 import Modules from "./pages/Modules";
 import LiveTrading from "./pages/LiveTrading";
 import Discussion from "./pages/Discussion";
-import Profile from "./pages/Profile";
+
 import BiweeklyTest from "./pages/BiweeklyTest";
 import Leaderboard from "./pages/Leaderboard";
 import MistakeAnalysis from "./pages/MistakeAnalysis";
@@ -29,8 +29,7 @@ const App = () => (
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/modules" element={<Modules />} />
             <Route path="/live-trading" element={<LiveTrading />} />
-            <Route path="/discussion" element={<Discussion />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/tradetalk" element={<Discussion />} />
             <Route path="/biweekly" element={<BiweeklyTest />} />
             <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="/mistakes" element={<MistakeAnalysis />} />

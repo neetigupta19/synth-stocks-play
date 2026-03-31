@@ -11,8 +11,7 @@ const navItems = [
   { title: 'Modules', url: '/modules', icon: BookOpen },
   { title: 'Live Trading', url: '/live-trading', icon: CandlestickChart },
   { title: 'Bi-weekly Test', url: '/biweekly', icon: Clock },
-  { title: 'Discussion', url: '/discussion', icon: MessageSquare },
-  { title: 'Profile', url: '/profile', icon: User },
+  { title: 'TradeTalk', url: '/tradetalk', icon: MessageSquare },
 ];
 
 export function AppSidebar() {
