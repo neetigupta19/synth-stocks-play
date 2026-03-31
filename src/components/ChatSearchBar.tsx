@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Bot, Search, X } from 'lucide-react';
+import { useState, useRef, useCallback } from 'react';
+import { Bot, Search, X, GripVertical } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const quickAnswers: Record<string, string> = {
@@ -19,6 +19,10 @@ export function ChatSearchBar() {
   const [query, setQuery] = useState('');
   const [answer, setAnswer] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const dragRef = useRef<HTMLDivElement>(null);
+  const dragStartRef = useRef({ x: 0, y: 0, posX: 0, posY: 0 });
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,15 +33,40 @@ export function ChatSearchBar() {
     setIsOpen(true);
   };
 
+  const onPointerDown = useCallback((e: React.PointerEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+    dragStartRef.current = { x: e.clientX, y: e.clientY, posX: position.x, posY: position.y };
+    (e.target as HTMLElement).setPointerCapture(e.pointerId);
+  }, [position]);
+
+  const onPointerMove = useCallback((e: React.PointerEvent) => {
+    if (!isDragging) return;
+    const dx = e.clientX - dragStartRef.current.x;
+    const dy = e.clientY - dragStartRef.current.y;
+    setPosition({ x: dragStartRef.current.posX + dx, y: dragStartRef.current.posY + dy });
+  }, [isDragging]);
+
+  const onPointerUp = useCallback(() => {
+    setIsDragging(false);
+  }, []);
+
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50">
+    <div
+      ref={dragRef}
+      className="fixed bottom-4 z-50 left-1/2"
+      style={{
+        transform: `translate(calc(-50% + ${position.x}px), ${position.y}px)`,
+        width: 'min(95vw, 42rem)',
+      }}
+    >
       <AnimatePresence>
         {isOpen && answer && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            className="max-w-2xl mx-auto mb-2 px-4"
+            className="mb-2 px-1"
           >
             <div className="card-cyber relative">
               <button onClick={() => { setIsOpen(false); setAnswer(null); }} className="absolute top-2 right-2 text-muted-foreground hover:text-foreground">
@@ -51,8 +80,16 @@ export function ChatSearchBar() {
           </motion.div>
         )}
       </AnimatePresence>
-      <div className="bg-card border-t border-border py-3 px-4">
-        <form onSubmit={handleSearch} className="max-w-2xl mx-auto flex gap-2">
+      <div className="bg-card border border-border rounded-lg py-3 px-4 shadow-lg flex items-center gap-2">
+        <div
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={onPointerUp}
+          className="cursor-grab active:cursor-grabbing text-muted-foreground hover:text-foreground touch-none select-none"
+        >
+          <GripVertical className="h-4 w-4" />
+        </div>
+        <form onSubmit={handleSearch} className="flex-1 flex gap-2">
           <div className="flex-1 relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <input
