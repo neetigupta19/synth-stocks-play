@@ -9,7 +9,7 @@ import Dashboard from "./pages/Dashboard";
 import Modules from "./pages/Modules";
 import LiveTrading from "./pages/LiveTrading";
 import Discussion from "./pages/Discussion";
-import Profile from "./pages/Profile";
+
 import BiweeklyTest from "./pages/BiweeklyTest";
 import Leaderboard from "./pages/Leaderboard";
 import MistakeAnalysis from "./pages/MistakeAnalysis";
